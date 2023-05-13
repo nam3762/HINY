@@ -15,9 +15,48 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <fragment android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/map"
-        android:name="com.naver.maps.map.MapFragment" />
+        android:orientation="vertical">
+        <fragment android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/map"
+            android:layout_gravity="center"
+            android:layout_weight="4"
+            android:name="com.naver.maps.map.MapFragment" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:id="@+id/home"
+                android:src="@drawable/home"></ImageButton>
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:id="@+id/jindan"
+                android:src="@drawable/check"></ImageButton>
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:id="@+id/drug"
+                android:src="@drawable/drugstore"></ImageButton>
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:id="@+id/hospital"
+                android:src="@drawable/doctor"></ImageButton>
+        </LinearLayout>
+    </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
