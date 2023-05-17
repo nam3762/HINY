@@ -1,8 +1,8 @@
 번호 - ID - integer
+데이터갱신일자 - dou - text
+사업장명 - name - text
 소재지전화 - tel - text
 도로명전체주소 - address - text
 도로명우편번호 - zip_code - int
-사업장명 - name - text
-데이터갱신일자 - dou - text
 좌표정보(x) - x_coord - double
 좌표정보(y) - y_coord - double
