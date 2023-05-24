@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity
 
     private NaverMap naverMap;
     private ImageButton checkbtn;
+    private ImageButton drugbtn;
+    private ImageButton hospitalbtn;
     private FusedLocationSource locationSource;
     private Marker marker;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
@@ -56,15 +58,31 @@ public class MainActivity extends AppCompatActivity
         mapFragment.getMapAsync(this);
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
         checkbtn = (ImageButton) findViewById(R.id.check);
+        drugbtn = (ImageButton) findViewById(R.id.drug);
+        hospitalbtn = (ImageButton) findViewById(R.id.hospital);
 
         checkbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),CheckActivity.class);
+                Intent intent = new Intent(MainActivity.this ,CheckActivity.class);
+                startActivity(intent);
+            }
+
+        });
+        drugbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this ,DrugActivity.class);
                 startActivity(intent);
             }
         });
-
+        hospitalbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this ,HospitalActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
