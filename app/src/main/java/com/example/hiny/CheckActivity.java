@@ -15,8 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 public class CheckActivity extends AppCompatActivity {
     private ImageButton homebtn;
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check);
         homebtn = (ImageButton) findViewById(R.id.home);
 
