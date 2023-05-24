@@ -20,31 +20,40 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp">
             <ImageButton
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
                 android:id="@+id/home"
-                android:src="@drawable/home"></ImageButton>
+                android:scaleType="fitXY"
+                android:src="@drawable/home" />
+
             <ImageButton
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
                 android:id="@+id/check"
-                android:src="@drawable/check"></ImageButton>
+                android:scaleType="fitXY"
+                android:src="@drawable/check" />
+
             <ImageButton
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
                 android:id="@+id/drug"
-                android:src="@drawable/drugstore"></ImageButton>
+                android:scaleType="fitXY"
+                android:src="@drawable/drugstore" />
+
             <ImageButton
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
                 android:id="@+id/hospital"
-                android:src="@drawable/doctor"></ImageButton>
+                android:scaleType="fitXY"
+                android:src="@drawable/doctor" />
         </LinearLayout>
     </LinearLayout>
 
