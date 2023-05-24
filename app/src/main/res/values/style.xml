@@ -1,7 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="SplashActivityTheme" parent="Theme.AppCompat.NoActionBar" >
-        <item name="android:windowBackground">@drawable/hiny_main</item>
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
 </resources>

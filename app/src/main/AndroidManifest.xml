@@ -31,7 +31,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CheckActivity"></activity>
+        <activity android:name=".CheckActivity" android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".DrugActivity" android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".HospitalActivity" android:parentActivityName=".MainActivity"></activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
