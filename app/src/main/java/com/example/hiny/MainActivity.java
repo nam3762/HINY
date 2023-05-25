@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +19,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.naver.maps.geometry.LatLng;
+import com.naver.maps.geometry.Tm128;
+import com.naver.maps.geometry.Utmk;
+import com.naver.maps.geometry.WebMercatorCoord;
 import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapFragment;
@@ -72,10 +77,28 @@ public class MainActivity extends AppCompatActivity
         this.naverMap = naverMap;
         naverMap.setLocationSource(locationSource);  //현재위치 표시
         ActivityCompat.requestPermissions(this, PERMISSIONS, LOCATION_PERMISSION_REQUEST_CODE);
+        getVal();
+    }
 
-        naverMap.setOnMapClickListener((point, coord) -> {
-            addMarker(coord.latitude, coord.longitude);
-        });
+    public void getVal() {
+
+        DataBaseHelper dbHelper = new DataBaseHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM em_store_final", null);
+        System.out.println("------------------ffffffffffffffffffffff-----------");
+        //" and name = ?",new String[]{"홍길동"});
+        while (cursor.moveToNext()) {
+            //val += cursor.getString(2) + ", ";
+            //System.out.println("------------------------");
+            System.out.println(cursor.getDouble(6) + ", " + cursor.getDouble(7));
+            Tm128 utmk = new Tm128(cursor.getDouble(6), cursor.getDouble(7));
+            LatLng latlng = utmk.toLatLng();
+            //System.out.println(latlng.latitude + ", " + latlng.longitude);
+            addMarker(latlng.latitude * 1.0211492839123241822559878276595, latlng.longitude + 0.98207200616958801313686771346171);
+        }
+        cursor.close();
+        dbHelper.close();
     }
 
     private void addMarker(double latitude, double longitude) {
