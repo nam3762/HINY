@@ -65,8 +65,9 @@ public class MainActivity extends AppCompatActivity
         checkbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),CheckActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(MainActivity.this,CheckActivity.class);
+                intent.putExtra("data","Test Popup");
+                startActivityForResult(intent,1);
             }
         });
 
