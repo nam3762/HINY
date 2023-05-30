@@ -115,6 +115,14 @@ public class MainActivity extends AppCompatActivity
             System.out.println(cursor.getDouble(6) + ", " + cursor.getDouble(7));
             //System.out.println(latlng.latitude + ", " + latlng.longitude);
             //addMarker(latlng.latitude, latlng.longitude);
+
+            // 이거 써야됨
+
+            /*distance = currentLocation.distanceTo("여기에 LatLng");
+            //if (distance<=1000){
+                addMarker("if문 만족하는 위도,경도");
+            }*/
+
         }
         cursor.close();
         dbHelper.close();
