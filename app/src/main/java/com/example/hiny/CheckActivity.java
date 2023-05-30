@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import java.util.List;
 public class CheckActivity extends Activity {
     private ImageButton homebtn;
     Integer[] questionNumber = new Integer[4];
+    Integer realQuestion = 0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +103,7 @@ public class CheckActivity extends Activity {
     }
     public List<Integer> getNumberList(int input) {
         List<Integer> numberList = new ArrayList<>();
-
+        realQuestion = input;
         if (input == 0) {
             numberList.add(1);
             numberList.add(2);
@@ -137,6 +139,9 @@ public class CheckActivity extends Activity {
             numberList.add(22);
             numberList.add(23);
         }
+        else {
+            numberList.add(-1);
+        }
 
         return numberList;
     }
@@ -146,22 +151,34 @@ public class CheckActivity extends Activity {
         Button answer2 = findViewById(R.id.btn2);
         Button answer3 = findViewById(R.id.btn3);
         Button answer4 = findViewById(R.id.btn4);
-        answer1.setText(questions[index.get(0)].getAnswer());
-        answer2.setText(questions[index.get(1)].getAnswer());
-        questionNumber[0] = index.get(0);
-        questionNumber[1] = index.get(1);
-        if (index.size() > 2) {
-            answer3.setText(questions[index.get(2)].getAnswer());
-            answer4.setText(questions[index.get(3)].getAnswer());
-            answer3.setVisibility(View.VISIBLE);
-            answer4.setVisibility(View.VISIBLE);
-            questionNumber[2] = index.get(2);
-            questionNumber[3] = index.get(3);
+        TextView question_view = findViewById(R.id.lovejunhyun);
+        if (index.size() != 1) {
+            answer1.setText(questions[index.get(0)].getAnswer());
+            answer2.setText(questions[index.get(1)].getAnswer());
+            questionNumber[0] = index.get(0);
+            questionNumber[1] = index.get(1);
+            if (index.size() > 2) {
+                answer3.setText(questions[index.get(2)].getAnswer());
+                answer4.setText(questions[index.get(3)].getAnswer());
+                answer3.setVisibility(View.VISIBLE);
+                answer4.setVisibility(View.VISIBLE);
+                questionNumber[2] = index.get(2);
+                questionNumber[3] = index.get(3);
+            }
+            else {
+                answer3.setVisibility(View.GONE);
+                answer4.setVisibility(View.GONE);
+            }
         }
         else {
-            answer3.setVisibility(View.GONE);
-            answer4.setVisibility(View.GONE);
+            answer1.setVisibility(View.GONE);
+            answer2.setVisibility(View.GONE);
+        }
+        if (questions[realQuestion].getQuestion() != null) {
+            question_view.setText(questions[realQuestion].getQuestion());
+        }
+        else {
+            question_view.setText(questions[realQuestion].getDrug());
         }
     }
-
 }

@@ -30,6 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:id="@+id/lovejunhyun"
                 android:text="질문리스트 여기다가 넣어 이 무자식아"
                 android:textColor="@color/black">
 <!--                너가 사이즈 조정해 이 자슥아-->
