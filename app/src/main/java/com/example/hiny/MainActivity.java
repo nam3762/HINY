@@ -10,10 +10,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PointF;
+import android.location.Location;
+import android.location.LocationRequest;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -34,6 +37,8 @@ import com.naver.maps.map.util.FusedLocationSource;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class MainActivity extends AppCompatActivity
         implements OnMapReadyCallback{
 
@@ -47,6 +52,10 @@ public class MainActivity extends AppCompatActivity
             Manifest.permission.ACCESS_COARSE_LOCATION
     };
     List<LatLng> lstLatLng = new ArrayList<>();
+
+    private double selflat, selflon, distance;
+    public LatLng currentLocation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +80,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
+
     }
 
     @Override
@@ -78,6 +89,15 @@ public class MainActivity extends AppCompatActivity
         this.naverMap = naverMap;
         naverMap.setLocationSource(locationSource);  //현재위치 표시
         ActivityCompat.requestPermissions(this, PERMISSIONS, LOCATION_PERMISSION_REQUEST_CODE);
+        naverMap.addOnLocationChangeListener(new NaverMap.OnLocationChangeListener() {
+            @Override
+            public void onLocationChange(@NonNull Location location) {
+                selflat=location.getLatitude();
+                selflon=location.getLongitude();
+
+                currentLocation = new LatLng(selflat,selflon);
+            }
+        });
         getVal();
     }
 
@@ -93,10 +113,8 @@ public class MainActivity extends AppCompatActivity
             //val += cursor.getString(2) + ", ";
             //System.out.println("------------------------");
             System.out.println(cursor.getDouble(6) + ", " + cursor.getDouble(7));
-            Tm128 utmk = new Tm128(cursor.getDouble(6), cursor.getDouble(7));
-            LatLng latlng = utmk.toLatLng();
             //System.out.println(latlng.latitude + ", " + latlng.longitude);
-            addMarker(latlng.latitude * 1.0211492839123241822559878276595, latlng.longitude + 0.98207200616958801313686771346171);
+            //addMarker(latlng.latitude, latlng.longitude);
         }
         cursor.close();
         dbHelper.close();
@@ -109,6 +127,7 @@ public class MainActivity extends AppCompatActivity
         marker=new Marker();
         marker.setPosition(new LatLng(latitude, longitude));
         marker.setMap(naverMap);
+
 
         // 마커가 추가된 위치로 카메라 이동
         CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(latitude, longitude));
@@ -129,6 +148,7 @@ public class MainActivity extends AppCompatActivity
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
 
 
 }
