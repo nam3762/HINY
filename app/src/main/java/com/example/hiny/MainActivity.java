@@ -147,6 +147,7 @@ public class MainActivity extends AppCompatActivity
 //            //System.out.println(latlng.latitude + ", " + latlng.longitude);
 //            addMarker(latlng.latitude + 1.0211492839123241822559878276595, latlng.longitude + 0.98207200616958801313686771346171);
 //            //addMarker(latlng.latitude, latlng.longitude);
+        //이거 먼데?
 //        }
     }
 
@@ -196,7 +197,5 @@ public class MainActivity extends AppCompatActivity
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
-
 
 }
