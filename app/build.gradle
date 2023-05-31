@@ -38,6 +38,7 @@ android {
 dependencies {
     //네이버 지도
     implementation 'com.naver.maps:map-sdk:3.16.0'
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
 
     //현재 위치 가져오기
     implementation 'io.github.ParkSangGwon:tedpermission-rx3:3.3.0'
