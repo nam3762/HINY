@@ -15,7 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="7">
+            android:layout_weight="7"
+            android:background="@drawable/buttonshape">
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
@@ -24,17 +25,34 @@
                 android:text="자가진단"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="20dp">
+                android:background="@drawable/buttonshape"
+                android:gravity="center"
+                android:textSize="25dp">
             </TextView>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:id="@+id/lovejunhyun"
                 android:text="질문리스트 여기다가 넣어 이 무자식아"
-                android:textColor="@color/black">
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:background="@drawable/buttonshape"
+                android:textSize="18dp">
 <!--                너가 사이즈 조정해 이 자슥아-->
             </TextView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/yacc"
+                android:text="약 설명: 약 설명 하십셔"
+                android:textSize="15dp"
+                android:layout_weight="0.8"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/buttonshape"></TextView>
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
@@ -49,28 +67,36 @@
                 android:layout_weight="3"
                 android:id="@+id/btn1"
                 android:scaleType="fitXY"
-                android:text="This is test" />
+                android:text="This is test"
+                android:textSize="15dp"
+                android:background="@drawable/buttonshape2"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:id="@+id/btn2"
                 android:scaleType="fitXY"
-                android:text="This is test" />
+                android:text="This is test"
+                android:textSize="15dp"
+                android:background="@drawable/buttonshape2"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:id="@+id/btn3"
                 android:scaleType="fitXY"
-                android:text="This is test" />
+                android:text="This is test"
+                android:textSize="15dp"
+                android:background="@drawable/buttonshape2"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:id="@+id/btn4"
                 android:scaleType="fitXY"
-                android:text="This is test" />
+                android:text="This is test"
+                android:textSize="15dp"
+                android:background="@drawable/buttonshape2"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"

@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity
 
                 currentLocation = new LatLng(selflat,selflon);
             }
-
         });
         //loadMarker();
     }
@@ -112,6 +111,8 @@ public class MainActivity extends AppCompatActivity
         for(int i=0; i< AccessDataBase.getMaxIndex()-1; i++){
             LatLng pos = new LatLng(AccessDataBase.getLat(i), AccessDataBase.getLng(i));
             distance = currentLocation.distanceTo(pos);
+            System.out.println(distance+"\n");
+            System.out.println(currentLocation+"\n");
             if (distance<=2000){
                 addMarker(AccessDataBase.getLat(i), AccessDataBase.getLng(i));
             }
