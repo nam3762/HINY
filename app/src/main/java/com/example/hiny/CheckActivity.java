@@ -51,14 +51,14 @@ public class CheckActivity extends Activity {
         questions[13] = new Question("알약을 드실 수 있으십니까?", "6세 ~ 12세", null);
         questions[14] = new Question(null, "알약 섭취 가능", "어린이용 타이레놀 160mg");
         questions[15] = new Question(null, "13세 이상", "타이레놀 500mg");
-        questions[16] = new Question("육류 / 어류 포함 식사", "현재 복통이 심하십니까?", null);
-        questions[17] = new Question("육류 / 어류 미포함 식사", "현재 복통이 심하십니까?", null);
+        questions[16] = new Question("현재 복통이 심하십니까?", "육류 / 어류 포함 식사", null);
+        questions[17] = new Question("현재 복통이 심하십니까?","육류 / 어류 미포함 식사",  null);
         questions[18] = new Question(null, "복통 있음", "닥터 베아제");
         questions[19] = new Question(null, "복통 없음", "훼스탈 골드");
         questions[20] = new Question(null, "복통 있음", "훼스탈 플러스");
         questions[21] = new Question(null, "복통 없음", "베아제");
-        questions[22] = new Question("타박상", null, "제일 쿨파프");
-        questions[23] = new Question("근육통", null, "신신파스 아레스");
+        questions[22] = new Question(null, "타박상", "제일 쿨파프");
+        questions[23] = new Question(null, "근육통", "신신파스 아레스");
 
         setButtonLabels(questions, getNumberList(0));
 
@@ -173,6 +173,8 @@ public class CheckActivity extends Activity {
         else {
             answer1.setVisibility(View.GONE);
             answer2.setVisibility(View.GONE);
+            answer3.setVisibility(View.GONE);
+            answer4.setVisibility(View.GONE);
         }
         if (questions[realQuestion].getQuestion() != null) {
             question_view.setText(questions[realQuestion].getQuestion());
