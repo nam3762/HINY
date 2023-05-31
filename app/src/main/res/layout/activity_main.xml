@@ -29,7 +29,9 @@
                 android:layout_weight="0.25"
                 android:id="@+id/home"
                 android:scaleType="fitXY"
-                android:src="@drawable/home" />
+                android:layout_margin="10dp"
+                android:background="@drawable/buttonshape"
+                android:src="@drawable/home1"/>
 
             <ImageButton
                 android:layout_width="0dp"
@@ -37,7 +39,9 @@
                 android:layout_weight="0.25"
                 android:id="@+id/check"
                 android:scaleType="fitXY"
-                android:src="@drawable/check" />
+                android:layout_margin="10dp"
+                android:background="@drawable/buttonshape"
+                android:src="@drawable/check1" />
 
             <ImageButton
                 android:layout_width="0dp"
@@ -45,15 +49,19 @@
                 android:layout_weight="0.25"
                 android:id="@+id/drug"
                 android:scaleType="fitXY"
-                android:src="@drawable/drugstore" />
+                android:layout_margin="10dp"
+                android:background="@drawable/buttonshape"
+                android:src="@drawable/drugstore1" />
 
             <ImageButton
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
                 android:id="@+id/hospital"
+                android:layout_margin="10dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/doctor" />
+                android:background="@drawable/buttonshape"
+                android:src="@drawable/hospital" />
         </LinearLayout>
     </LinearLayout>
 
