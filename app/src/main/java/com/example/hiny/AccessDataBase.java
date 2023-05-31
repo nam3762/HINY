@@ -26,6 +26,7 @@ public class AccessDataBase{
         private double y_coord;
         private double lat;
         private double lng;
+        private String manual = "No Manual";
     }
     private Context mcontext;
     public AccessDataBase(Context context){
@@ -38,13 +39,19 @@ public class AccessDataBase{
     }
 
     public int getId(int index){
-
         return convDataSet.get(index+1).id;
     }
 
     public String getDou(int index){
         return convDataSet.get(index+1).dou;
+    }
 
+    public String getName(int index){
+        return convDataSet.get(index+1).name;
+    }
+
+    public String getManual(int index){
+        return convDataSet.get(index+1).manual;
     }
 
     public static double getLat(int index){
@@ -56,6 +63,8 @@ public class AccessDataBase{
 
         return convDataSet.get(index+1).lng;
     }
+
+
 
     public void loadDataBase() {
         Log.d("AccessDB Load DataBase", "loadDataBase: ");

@@ -14,6 +14,7 @@ import android.location.Location;
 import android.location.LocationRequest;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity
             Manifest.permission.ACCESS_COARSE_LOCATION
     };
     public AccessDataBase acDB  = new AccessDataBase(this);
+    private boolean start = true;
 
     private Double selflat, selflon, distance;
     public LatLng currentLocation;
@@ -82,8 +84,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
-
     }
 
     @Override
@@ -100,32 +100,38 @@ public class MainActivity extends AppCompatActivity
                 selflon=location.getLongitude();
 
                 currentLocation = new LatLng(selflat,selflon);
+//
+//                if(start){
+//                    loadMarker();
+//                    start = false;
+//                }
             }
+
         });
-        //loadMarker();
+
+
+
     }
 
 
     public void loadMarker() {
         Log.d("Main Activity", "loadMarker: ");
-        for(int i=0; i< AccessDataBase.getMaxIndex()-1; i++){
-            LatLng pos = new LatLng(AccessDataBase.getLat(i), AccessDataBase.getLng(i));
-            distance = currentLocation.distanceTo(pos);
-            System.out.println(distance+"\n");
-            System.out.println(currentLocation+"\n");
-            if (distance<=2000){
-                addMarker(AccessDataBase.getLat(i), AccessDataBase.getLng(i));
-            }
-            System.out.println(AccessDataBase.getLat(i) + ", "+ AccessDataBase.getLng(i) + "\n");
-        }
 //        for(int i=0; i< AccessDataBase.getMaxIndex()-1; i++){
-//            if (getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), selflat, selflon) < 4.0) {
-//                Log.d("addMarker", "addMarker");
+//            LatLng pos = new LatLng(AccessDataBase.getLat(i), AccessDataBase.getLng(i));
+//            distance = currentLocation.distanceTo(pos);
+//            if (distance<=2000){
 //                addMarker(AccessDataBase.getLat(i), AccessDataBase.getLng(i));
 //            }
 //            System.out.println(AccessDataBase.getLat(i) + ", "+ AccessDataBase.getLng(i) + "\n");
-//            System.out.println("ff" + getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), selflat, selflon));
 //        }
+        for(int i=0; i< AccessDataBase.getMaxIndex()-1; i++){
+            if (getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), selflat, selflon) < 4.0) {
+                Log.d("addMarker", "addMarker");
+                addMarker(AccessDataBase.getLat(i), AccessDataBase.getLng(i));
+            }
+            System.out.println(AccessDataBase.getLat(i) + ", "+ AccessDataBase.getLng(i) + "\n");
+            System.out.println("ff" + getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), selflat, selflon));
+        }
 
         System.out.println("eeeeeeeee" + selflat);
         //" and name = ?",new String[]{"홍길동"});
