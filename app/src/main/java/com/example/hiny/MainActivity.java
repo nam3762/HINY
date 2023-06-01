@@ -105,14 +105,16 @@ public class MainActivity extends AppCompatActivity
                 currentLocation = new LatLng(selflat,selflon);
                 System.out.println(start);
 
-//                if(start){
-//                    loadMarker();
-//                    start = false;
-//                }
+                if(start){
+                    loadMarker();
+                    start = false;
+                }
+
             }
 
-        });
 
+
+        });
     }
 
     @Override
@@ -126,7 +128,6 @@ public class MainActivity extends AppCompatActivity
                 break;
             case MotionEvent.ACTION_UP:
                 // 손가락을 화면에서 떼었을 때 처리할 코드
-                //loadMarker();
                 break;
         }
         return true;
@@ -135,40 +136,15 @@ public class MainActivity extends AppCompatActivity
 
 
     public void loadMarker() {
-        CameraPosition cameraPosition = naverMap.getCameraPosition();
-        Projection projection = naverMap.getProjection();
-        LatLng coord = projection.fromScreenLocation(new PointF(100, 100));
         Log.d("Main Activity", "loadMarker: ");
-//        for(int i=0; i< AccessDataBase.getMaxIndex()-1; i++){
-//            LatLng pos = new LatLng(AccessDataBase.getLat(i), AccessDataBase.getLng(i));
-//            distance = currentLocation.distanceTo(pos);
-//            if (distance<=2000){
-//                addMarker(AccessDataBase.getLat(i), AccessDataBase.getLng(i));
-//            }
-//            System.out.println(AccessDataBase.getLat(i) + ", "+ AccessDataBase.getLng(i) + "\n");
-//        }
+
         for(int i=0; i< AccessDataBase.getMaxIndex()-1; i++){
-            if (getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), coord.latitude, coord.longitude) < 4.0) {
+            if (getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), selflat, selflon) < 4.0) {
                 Log.d("addMarker", "addMarker");
                 addMarker(AccessDataBase.getLat(i), AccessDataBase.getLng(i));
             }
             System.out.println(AccessDataBase.getLat(i) + ", "+ AccessDataBase.getLng(i) + "\n");
         }
-        //" and name = ?",new String[]{"홍길동"});
-//        while (cursor.moveToNext()) {
-//
-//            AccessDataBase.getXCoord()
-//            //val += cursor.getString(2) + ", ";
-//            //System.out.println("------------------------");
-//            System.out.println(cursor.getDouble(6) + ", " + cursor.getDouble(7));
-//            Tm128 utmk = new Tm128(cursor.getDouble(6), cursor.getDouble(7));
-//            LatLng latlng = utmk.toLatLng();
-////            LatLng latlng = new LatLng(cursor.getDouble(6), cursor.getDouble(7));
-//            //System.out.println(latlng.latitude + ", " + latlng.longitude);
-//            addMarker(latlng.latitude + 1.0211492839123241822559878276595, latlng.longitude + 0.98207200616958801313686771346171);
-//            //addMarker(latlng.latitude, latlng.longitude);
-        //이거 먼데?
-//        }
     }
 
 
