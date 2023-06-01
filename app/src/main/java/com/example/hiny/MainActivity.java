@@ -27,11 +27,13 @@ import com.naver.maps.geometry.LatLng;
 import com.naver.maps.geometry.Tm128;
 import com.naver.maps.geometry.Utmk;
 import com.naver.maps.geometry.WebMercatorCoord;
+import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
+import com.naver.maps.map.Projection;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.PathOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
         checkbtn = (ImageButton) findViewById(R.id.check);
         acDB.loadDataBase();
-
+        //loadMarker();
 
         checkbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,12 +88,13 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+
+
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
         this.naverMap = naverMap;
         naverMap.setLocationSource(locationSource);  //현재위치 표시
         ActivityCompat.requestPermissions(this, PERMISSIONS, LOCATION_PERMISSION_REQUEST_CODE);
-
 
         naverMap.addOnLocationChangeListener(new NaverMap.OnLocationChangeListener() {
             @Override
@@ -100,7 +103,8 @@ public class MainActivity extends AppCompatActivity
                 selflon=location.getLongitude();
 
                 currentLocation = new LatLng(selflat,selflon);
-//
+                System.out.println(start);
+
 //                if(start){
 //                    loadMarker();
 //                    start = false;
@@ -109,12 +113,31 @@ public class MainActivity extends AppCompatActivity
 
         });
 
+    }
 
-
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                // 화면을 눌렀을 때 처리할 코드
+                break;
+            case MotionEvent.ACTION_MOVE:
+                // 손가락을 움직일 때 처리할 코드
+                break;
+            case MotionEvent.ACTION_UP:
+                // 손가락을 화면에서 떼었을 때 처리할 코드
+                //loadMarker();
+                break;
+        }
+        return true;
     }
 
 
+
     public void loadMarker() {
+        CameraPosition cameraPosition = naverMap.getCameraPosition();
+        Projection projection = naverMap.getProjection();
+        LatLng coord = projection.fromScreenLocation(new PointF(100, 100));
         Log.d("Main Activity", "loadMarker: ");
 //        for(int i=0; i< AccessDataBase.getMaxIndex()-1; i++){
 //            LatLng pos = new LatLng(AccessDataBase.getLat(i), AccessDataBase.getLng(i));
@@ -125,15 +148,12 @@ public class MainActivity extends AppCompatActivity
 //            System.out.println(AccessDataBase.getLat(i) + ", "+ AccessDataBase.getLng(i) + "\n");
 //        }
         for(int i=0; i< AccessDataBase.getMaxIndex()-1; i++){
-            if (getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), selflat, selflon) < 4.0) {
+            if (getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), coord.latitude, coord.longitude) < 4.0) {
                 Log.d("addMarker", "addMarker");
                 addMarker(AccessDataBase.getLat(i), AccessDataBase.getLng(i));
             }
             System.out.println(AccessDataBase.getLat(i) + ", "+ AccessDataBase.getLng(i) + "\n");
-            System.out.println("ff" + getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), selflat, selflon));
         }
-
-        System.out.println("eeeeeeeee" + selflat);
         //" and name = ?",new String[]{"홍길동"});
 //        while (cursor.moveToNext()) {
 //
