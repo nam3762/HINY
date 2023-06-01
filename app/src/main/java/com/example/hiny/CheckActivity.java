@@ -3,8 +3,6 @@ package com.example.hiny;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -12,14 +10,23 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 
 public class CheckActivity extends Activity {
+    long mNow;
+    Date mDate;
+    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     private ImageButton homebtn;
     Integer[] questionNumber = new Integer[4];
     Integer realQuestion = 0;
@@ -101,6 +108,14 @@ public class CheckActivity extends Activity {
 
 
     }
+
+
+    private String getTime(){
+        mNow = System.currentTimeMillis();
+        mDate = new Date(mNow);
+        return mFormat.format(mDate);
+    }
+
     public List<Integer> getNumberList(int input) {
         List<Integer> numberList = new ArrayList<>();
         realQuestion = input;
@@ -181,6 +196,29 @@ public class CheckActivity extends Activity {
         }
         else {
             question_view.setText(questions[realQuestion].getDrug());
+            new Thread(() -> {
+                String url ="http://113.198.137.238:80/log.php";
+                OkHttpClient client = new OkHttpClient();
+                String data = getTime() + " " + questions[realQuestion].getDrug();
+                RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain"), data);
+                Request request = new Request.Builder()
+                        .url(url)
+                        .post(requestBody)
+                        .build();
+                try {
+                    Response response = client.newCall(request).execute();
+                    if (response.isSuccessful()){
+                        Log.d("test",data);
+                    }
+                    else {
+                        Log.d("test","Fail");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.d("test","catch Fail");
+                }
+            }).start();
+
         }
     }
 }
