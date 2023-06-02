@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity
         implements OnMapReadyCallback{
 
     private NaverMap naverMap;
-    private ImageButton checkbtn;
+    private ImageButton checkbtn,homebtn;
     private FusedLocationSource locationSource;
     private Marker marker;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity
         mapFragment.getMapAsync(this);
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
         checkbtn = (ImageButton) findViewById(R.id.check);
+        homebtn = (ImageButton) findViewById(R.id.home);
         acDB.loadDataBase();
         //loadMarker();
 
@@ -69,6 +70,13 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(MainActivity.this,CheckActivity.class);
                 intent.putExtra("data","Test Popup");
                 startActivityForResult(intent,1);
+            }
+        });
+
+        homebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                start = true;
             }
         });
 
@@ -212,7 +220,6 @@ public class MainActivity extends AppCompatActivity
                 naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
             }
         }
-
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
