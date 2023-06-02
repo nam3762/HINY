@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 public class AccessDataBase{
 
-    private static final ArrayList<convData> convDataSet = new ArrayList<>();
-    private static final ArrayList<medData> medDataSet = new ArrayList<>();
+    public static final ArrayList<convData> convDataSet = new ArrayList<>();
+    public static final ArrayList<medData> medDataSet = new ArrayList<>();
     private static int medMaxIndex = 0;
     private static class medData{
         private int id;
@@ -55,24 +55,32 @@ public class AccessDataBase{
     }
 
     public int getId(int index){
-        return convDataSet.get(index+1).id;
+        return convDataSet.get(index).id;
     }
 
-    public String getDou(int index){
-        return convDataSet.get(index+1).dou;
+    public static String getDou(int index){
+        return convDataSet.get(index).dou;
     }
 
-    public String getName(int index){
-        return convDataSet.get(index+1).name;
+    public static String getName(int index){
+        return convDataSet.get(index).name;
+    }
+
+    public static String getAddress(int index){
+        return convDataSet.get(index).address;
+    }
+
+    public static String getTel(int index){
+        return convDataSet.get(index).tel;
     }
 
     public static double getLat(int index){
         Log.d("DataBase GetX Cord", "getXCoord: "+index+"  \t ");
-        return convDataSet.get(index+1).lat;
+        return convDataSet.get(index).lat;
     }
 
     public static double getLng(int index){
-        return convDataSet.get(index+1).lng;
+        return convDataSet.get(index).lng;
     }
 
 

@@ -1,5 +1,7 @@
 package com.example.hiny;
 
+import static com.gun0912.tedpermission.provider.TedPermissionProvider.context;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -7,39 +9,24 @@ import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.PointF;
 import android.location.Location;
-import android.location.LocationRequest;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.naver.maps.geometry.LatLng;
-import com.naver.maps.geometry.Tm128;
-import com.naver.maps.geometry.Utmk;
-import com.naver.maps.geometry.WebMercatorCoord;
-import com.naver.maps.map.CameraPosition;
-import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
-import com.naver.maps.map.Projection;
+import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
-import com.naver.maps.map.overlay.PathOverlay;
+import com.naver.maps.map.overlay.Overlay;
 import com.naver.maps.map.util.FusedLocationSource;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class MainActivity extends AppCompatActivity
         implements OnMapReadyCallback{
@@ -55,11 +42,10 @@ public class MainActivity extends AppCompatActivity
     };
     public AccessDataBase acDB  = new AccessDataBase(this);
     private boolean start = true;
-
     private Double selflat, selflon, distance;
     public LatLng currentLocation;
 
-
+    private HashMap<Marker, Integer> markerData = new HashMap<Marker, Integer>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,8 +72,9 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-    }
 
+
+    }
 
 
     @Override
@@ -103,7 +90,6 @@ public class MainActivity extends AppCompatActivity
                 selflon=location.getLongitude();
 
                 currentLocation = new LatLng(selflat,selflon);
-                System.out.println(start);
 
                 if(start){
                     loadMarker();
@@ -111,40 +97,76 @@ public class MainActivity extends AppCompatActivity
                 }
 
             }
-
-
-
         });
+
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                // 화면을 눌렀을 때 처리할 코드
-                break;
-            case MotionEvent.ACTION_MOVE:
-                // 손가락을 움직일 때 처리할 코드
-                break;
-            case MotionEvent.ACTION_UP:
-                // 손가락을 화면에서 떼었을 때 처리할 코드
-                break;
-        }
-        return true;
-    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        switch (event.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                // 화면을 눌렀을 때 처리할 코드
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                // 손가락을 움직일 때 처리할 코드
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                // 손가락을 화면에서 떼었을 때 처리할 코드
+//                break;
+//        }
+//        return true;
+//    }
 
 
 
     public void loadMarker() {
-        Log.d("Main Activity", "loadMarker: ");
-
-        for(int i=0; i< AccessDataBase.getMaxIndex()-1; i++){
+        for(int i=0; i< AccessDataBase.getMaxIndex(); i++){
             if (getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), selflat, selflon) < 4.0) {
-                Log.d("addMarker", "addMarker");
-                addMarker(AccessDataBase.getLat(i), AccessDataBase.getLng(i));
+                markerData.put(addMarker(AccessDataBase.getLat(i), AccessDataBase.getLng(i)), i);
             }
             System.out.println(AccessDataBase.getLat(i) + ", "+ AccessDataBase.getLng(i) + "\n");
         }
+
+        AtomicReference<String> informationWindow = new AtomicReference<>("test");
+        InfoWindow infoWindow = new InfoWindow();
+        infoWindow.setAdapter(new InfoWindow.DefaultTextAdapter(context) {
+
+
+            @NonNull
+            @Override
+            public CharSequence getText(@NonNull InfoWindow infoWindow) {
+
+                return informationWindow.get();
+            }
+        });
+
+
+        Overlay.OnClickListener listener = overlay -> {
+            Marker marker = (Marker)overlay;
+            int dataID = markerData.get(marker);
+            informationWindow.set(AccessDataBase.getName(dataID) + "\n"
+            + "주소: " + AccessDataBase.getAddress(dataID) + "\n"
+            + "전화번호: " + AccessDataBase.getTel(dataID));
+
+
+            if (marker.getInfoWindow() == null) {
+                // 현재 마커에 정보 창이 열려있지 않을 경우 엶
+                infoWindow.open(marker);
+            } else {
+                // 이미 현재 마커에 정보 창이 열려있을 경우 닫음
+                infoWindow.close();
+            }
+
+            return true;
+        };
+
+        for(Marker mark : markerData.keySet() ){
+            Log.d("marker", mark.getPosition().toString());
+            mark.setOnClickListener(listener);
+        }
+        naverMap.setOnMapClickListener((coord, point) -> {
+            infoWindow.close();
+        });
     }
 
 
@@ -165,7 +187,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void addMarker(double latitude, double longitude) {
+    private Marker addMarker(double latitude, double longitude) {
         // 기존 마커가 있을 경우 제거
 
         // 새로운 마커 생성
@@ -173,7 +195,7 @@ public class MainActivity extends AppCompatActivity
         marker.setPosition(new LatLng(latitude, longitude));
         marker.setMap(naverMap);
 
-
+        return marker;
         // 마커가 추가된 위치로 카메라 이동
 //        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(latitude, longitude));
 //        naverMap.moveCamera(cameraUpdate);
