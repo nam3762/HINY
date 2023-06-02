@@ -7,12 +7,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 
+
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.PointF;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowMetrics;
 import android.widget.ImageButton;
 
 import com.naver.maps.geometry.LatLng;
@@ -20,6 +25,7 @@ import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
+import com.naver.maps.map.Projection;
 import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.Overlay;
@@ -128,8 +134,26 @@ public class MainActivity extends AppCompatActivity
 
 
     public void loadMarker() {
+        for(Marker mark : markerData.keySet() ){
+            Log.d("marker", mark.getPosition().toString());
+            mark.setMap(null);
+        }
+
+//        WindowMetrics window = this.getWindowManager().getCurrentWindowMetrics();
+//        window.getBounds().width();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        final int middleWidth = displayMetrics.widthPixels/2;
+        final int middleHeight = displayMetrics.heightPixels/2;
+
+
+        Projection projection = naverMap.getProjection();
+        LatLng pos = projection.fromScreenLocation(new PointF(middleWidth, middleHeight));
+
         for(int i=0; i< AccessDataBase.getMaxIndex(); i++){
-            if (getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), selflat, selflon) < 4.0) {
+            //if (getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), selflat, selflon) < 4.0) {
+            if (getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), pos.latitude, pos.longitude) < 4.0) {
                 markerData.put(addMarker(AccessDataBase.getLat(i), AccessDataBase.getLng(i)), i);
             }
             System.out.println(AccessDataBase.getLat(i) + ", "+ AccessDataBase.getLng(i) + "\n");
