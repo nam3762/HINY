@@ -21,6 +21,7 @@ import android.view.WindowMetrics;
 import android.widget.ImageButton;
 
 import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
@@ -108,6 +109,8 @@ public class MainActivity extends AppCompatActivity
                 if(start){
                     loadMarker();
                     start = false;
+                    CameraUpdate cameraUpdate = CameraUpdate.scrollTo(currentLocation);
+                    naverMap.moveCamera(cameraUpdate);
                 }
 
             }
@@ -153,7 +156,7 @@ public class MainActivity extends AppCompatActivity
 
         for(int i=0; i< AccessDataBase.getMaxIndex(); i++){
             //if (getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), selflat, selflon) < 4.0) {
-            if (getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), pos.latitude, pos.longitude) < 4.0) {
+            if (getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), selflat, selflon) < 3.0) {
                 markerData.put(addMarker(AccessDataBase.getLat(i), AccessDataBase.getLng(i)), i);
             }
             System.out.println(AccessDataBase.getLat(i) + ", "+ AccessDataBase.getLng(i) + "\n");
