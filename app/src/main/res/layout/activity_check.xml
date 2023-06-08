@@ -60,7 +60,7 @@
                 android:textColor="@color/black"
                 android:layout_marginRight="8dp"
                 android:layout_marginLeft="8dp"
-                android:background="@drawable/buttonshape"></TextView>
+                android:background="@drawable/buttonshape" />
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"

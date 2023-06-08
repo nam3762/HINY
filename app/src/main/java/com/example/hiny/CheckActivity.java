@@ -167,6 +167,7 @@ public class CheckActivity extends Activity {
     private void getDoseData(){
         for(int i=0; i<AccessDataBase.getMedMaxIndex(); i++){
             getDose.put(AccessDataBase.getMedicine(i), AccessDataBase.getDosage(i));
+            System.out.println(AccessDataBase.getDosage(i));
         }
     }
 
@@ -176,6 +177,8 @@ public class CheckActivity extends Activity {
         Button answer3 = findViewById(R.id.btn3);
         Button answer4 = findViewById(R.id.btn4);
         TextView question_view = findViewById(R.id.lovejunhyun);
+        TextView answer_view = findViewById(R.id.yacc);
+        answer_view.setVisibility(View.GONE);
         if (index.size() != 1) {
             answer1.setText(questions[index.get(0)].getAnswer());
             answer2.setText(questions[index.get(1)].getAnswer());
@@ -204,8 +207,10 @@ public class CheckActivity extends Activity {
             question_view.setText(questions[realQuestion].getQuestion());
         }
         else {
-
             question_view.setText(questions[realQuestion].getDrug());
+            answer_view.setText(getDose.get((questions[realQuestion].getDrug())));
+            //Log.d("test", getDose.get((questions[realQuestion].getDrug())));
+            answer_view.setVisibility(View.VISIBLE);
             new Thread(() -> {
                 String url ="http://tuxserver.cbnu.ac.kr:80/log.php";
                 OkHttpClient client = new OkHttpClient();
