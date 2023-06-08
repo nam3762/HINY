@@ -223,17 +223,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private Marker addMarker(double latitude, double longitude) {
-        // 기존 마커가 있을 경우 제거
-
-        // 새로운 마커 생성
         marker=new Marker();
         marker.setPosition(new LatLng(latitude, longitude));
         marker.setMap(naverMap);
 
         return marker;
-        // 마커가 추가된 위치로 카메라 이동
-//        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(latitude, longitude));
-//        naverMap.moveCamera(cameraUpdate);
     }
 
     @Override

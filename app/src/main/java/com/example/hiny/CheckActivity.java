@@ -10,11 +10,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.naver.maps.map.overlay.Marker;
+
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -30,13 +33,13 @@ public class CheckActivity extends Activity {
     private ImageButton homebtn;
     Integer[] questionNumber = new Integer[4];
     Integer realQuestion = 0;
-
+    private HashMap<String, String> getDose = new HashMap<String, String>();
 
     private boolean start = true;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getDoseData();
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_check);
         homebtn = (ImageButton) findViewById(R.id.home);
@@ -107,8 +110,6 @@ public class CheckActivity extends Activity {
                 finish();
             }
         });
-
-
     }
 
 
@@ -163,6 +164,12 @@ public class CheckActivity extends Activity {
         return numberList;
     }
 
+    private void getDoseData(){
+        for(int i=0; i<AccessDataBase.getMedMaxIndex(); i++){
+            getDose.put(AccessDataBase.getMedicine(i), AccessDataBase.getDosage(i));
+        }
+    }
+
     public void setButtonLabels(Question[] questions, List<Integer> index) {
         Button answer1 = findViewById(R.id.btn1);
         Button answer2 = findViewById(R.id.btn2);
@@ -197,6 +204,7 @@ public class CheckActivity extends Activity {
             question_view.setText(questions[realQuestion].getQuestion());
         }
         else {
+
             question_view.setText(questions[realQuestion].getDrug());
             new Thread(() -> {
                 String url ="http://tuxserver.cbnu.ac.kr:80/log.php";

@@ -15,6 +15,7 @@ public class AccessDataBase{
 
     public static final ArrayList<convData> convDataSet = new ArrayList<>();
     public static final ArrayList<medData> medDataSet = new ArrayList<>();
+    public static final ArrayList<hospitalData> hospitalDataSet = new ArrayList<>();
     private static int medMaxIndex = 0;
     public static class medData{
         private int id;
@@ -43,6 +44,19 @@ public class AccessDataBase{
         private double y_coord;
         private double lat;
         private double lng;
+    }
+
+    private static int hospitalIndex = 0;
+    private static class hospitalData{
+        private int id;
+        private String hospitalName;
+        private int hospitalZipcode;
+        private String hospitalTel;
+        private String hospitalAddress;
+        private double hospital_lat;
+        private double hospital_lng;
+        private String hospital_homepage;
+
     }
     private final Context mcontext;
 //    public AccessDataBase(Context context){
@@ -134,24 +148,21 @@ public class AccessDataBase{
     public static String getStorageMethod(int index){
         return medDataSet.get(index).storageMethod;
     }
+    
     public static int getPrice(int index){
         return medDataSet.get(index).price;
     }
 
+    //hospital_db
 
 
     public void loadDataBase() {
         DataBaseHelper dbConv = new DataBaseHelper(mcontext);
-
         SQLiteDatabase db = dbConv.getReadableDatabase();
-
 
         Cursor cursor = db.rawQuery("SELECT * FROM em_store_final", null);
 
-        //" and name = ?",new String[]{"홍길동"});
         while (cursor.moveToNext()) {
-            //val += cursor.getString(2) + ", ";
-
             convData Data = new convData();
             Data.id = cursor.getInt(0);
             Data.dou = cursor.getString(1);
@@ -163,8 +174,6 @@ public class AccessDataBase{
             Data.y_coord = cursor.getDouble(7);
             Data.lat = cursor.getDouble(8);
             Data.lng = cursor.getDouble(9);
-
-
             convDataSet.add(Data);
             maxIndex += 1;
         }
@@ -192,7 +201,25 @@ public class AccessDataBase{
         }
 
         medDataCursor.close();
-
         dbLocate.close();
+
+
+//        DataBaseHelper dbHospital = new DataBaseHelper(mcontext);
+//        SQLiteDatabase dbHospitalPos = dbHospital.getReadableDatabase();
+//        Cursor hospitalCursor = dbHospitalPos.rawQuery("SELECT * FROM hospital_db", null);
+//        while (hospitalCursor.moveToNext()){
+//            hospitalData hospitalData = new hospitalData();
+//            hospitalData.hospitalName = medDataCursor.getString(0);
+//            hospitalData.hospitalZipcode = medDataCursor.getInt(1);
+//            hospitalData.hospitalAddress = medDataCursor.getString(2);
+//            hospitalData.hospital_lat = medDataCursor.getDouble(3);
+//            hospitalData.hospital_lng = medDataCursor.getDouble(4);
+//            hospitalData.hospital_homepage = medDataCursor.getString(5);
+//            hospitalDataSet.add(hospitalData);
+//            hospitalIndex += 1;
+//        }
+//
+//        medDataCursor.close();
+//        dbLocate.close();
     }
 }
