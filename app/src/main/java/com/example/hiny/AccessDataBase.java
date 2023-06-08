@@ -89,42 +89,42 @@ public class AccessDataBase{
 //        return medDataSet.get(index+1).id;
 //    }
 
-    public String getSymptoms(int index){
+    public static String getSymptoms(int index){
         return medDataSet.get(index+1).symptoms;
     }
 
-    public String getAge(int index){
+    public static String getAge(int index){
         return medDataSet.get(index+1).age;
     }
 
-    public String getFirstOption(int index){
+    public static String getFirstOption(int index){
         return medDataSet.get(index+1).first_option;
     }
 
-    public String getSecondOption(int index){
+    public static String getSecondOption(int index){
         return medDataSet.get(index+1).second_option;
     }
 
-    public String getMedicine(int index){
+    public static String getMedicine(int index){
         return medDataSet.get(index+1).medicine;
     }
-    public String getDosage(int index){
+    public static String getDosage(int index){
         return medDataSet.get(index+1).dosage;
     }
 
-    public String getNeedToKnowBeforeUse(int index){
+    public static String getNeedToKnowBeforeUse(int index){
         return medDataSet.get(index+1).needToKnowBeforeUse;
     }
 
-    public String getPrecaution(int index){
+    public static String getPrecaution(int index){
         return medDataSet.get(index+1).precaution;
     }
 
-    public String getFoodsToBeAwareOf(int index){
+    public static String getFoodsToBeAwareOf(int index){
         return medDataSet.get(index+1).foodsToBeAwareOf;
     }
 
-    public String getStorageMethod(int index){
+    public static String getStorageMethod(int index){
         return medDataSet.get(index+1).storageMethod;
     }
 
@@ -176,6 +176,7 @@ public class AccessDataBase{
             medData.precaution = medDataCursor.getString(7);
             medData.foodsToBeAwareOf = medDataCursor.getString(8);
             medData.storageMethod = medDataCursor.getString(9);
+            medMaxIndex += 1;
         }
 
         medDataCursor.close();
