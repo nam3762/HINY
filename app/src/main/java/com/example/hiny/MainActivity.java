@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity
 
                 currentLocation = new LatLng(selflat,selflon);
 
-                if(start){
+                if(start) {
                     loadMarker();
                     start = false;
                     CameraUpdate cameraUpdate = CameraUpdate.scrollTo(currentLocation);
@@ -152,7 +152,6 @@ public class MainActivity extends AppCompatActivity
 
     public void loadMarker() {
         for(Marker mark : markerData.keySet() ){
-            Log.d("marker", mark.getPosition().toString());
             mark.setMap(null);
         }
 
@@ -172,10 +171,10 @@ public class MainActivity extends AppCompatActivity
             if (getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), selflat, selflon) < 3.0) {
                 markerData.put(addMarker(AccessDataBase.getLat(i), AccessDataBase.getLng(i)), i);
             }
-            System.out.println(AccessDataBase.getLat(i) + ", "+ AccessDataBase.getLng(i) + "\n");
+            //System.out.println(AccessDataBase.getLat(i) + ", "+ AccessDataBase.getLng(i) + "\n");
         }
 
-        AtomicReference<String> informationWindow = new AtomicReference<>("test");
+        AtomicReference<String> informationWindow = new AtomicReference<>("InitValue");
         InfoWindow infoWindow = new InfoWindow();
         infoWindow.setAdapter(new InfoWindow.DefaultTextAdapter(context) {
 
@@ -183,7 +182,6 @@ public class MainActivity extends AppCompatActivity
             @NonNull
             @Override
             public CharSequence getText(@NonNull InfoWindow infoWindow) {
-
                 return informationWindow.get();
             }
         });

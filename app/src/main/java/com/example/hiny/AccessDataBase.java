@@ -16,6 +16,7 @@ public class AccessDataBase{
     public static final ArrayList<convData> convDataSet = new ArrayList<>();
     public static final ArrayList<medData> medDataSet = new ArrayList<>();
     public static final ArrayList<hospitalData> hospitalDataSet = new ArrayList<>();
+    public static final ArrayList<pharmacyData> pharmacyDataSet = new ArrayList<>();
     private static int medMaxIndex = 0;
     public static class medData{
         private int id;
@@ -58,6 +59,17 @@ public class AccessDataBase{
         private String hospital_homepage;
 
     }
+    private static int pharmacyIndex = 0;
+    private static class pharmacyData{
+        private int id;
+        private String pharmacyName;
+        private int pharmacyZipcode;
+        private String pharmacyAddress;
+        private String pharmacyTel;
+        private double pharmacy_lat;
+        private double pharmacy_lng;
+
+    }
     private final Context mcontext;
 //    public AccessDataBase(Context context){
 //        mcontext=context;
@@ -93,7 +105,7 @@ public class AccessDataBase{
     }
 
     public static double getLat(int index){
-        Log.d("DataBase GetX Cord", "getXCoord: "+index+"  \t ");
+        //Log.d("DataBase GetX Cord", "getXCoord: "+index+"  \t ");
         return convDataSet.get(index).lat;
     }
 
@@ -154,6 +166,62 @@ public class AccessDataBase{
     }
 
     //hospital_db
+    public static int getHospitalIndex(){
+        return hospitalIndex;
+    }
+
+    public static String getHospitalName(int index){
+        return hospitalDataSet.get(index).hospitalName;
+    }
+
+    public static int getHospitalZipcode(int index){
+        return hospitalDataSet.get(index).hospitalZipcode;
+    }
+
+    public static String getHospitalAddress(int index){
+        return hospitalDataSet.get(index).hospitalAddress;
+    }
+
+    public static double getHospitalLat(int index){
+        return hospitalDataSet.get(index).hospital_lat;
+    }
+
+    public static double getHospitalLng(int index){
+        return hospitalDataSet.get(index).hospital_lng;
+    }
+
+    public static String getHospitalHomepage(int index){
+        return hospitalDataSet.get(index).hospital_homepage;
+    }
+
+    //pharmacy Data
+    public static int getPharmacyIndex(){
+        return pharmacyIndex;
+    }
+
+    public static String getPharmacyName(int index){
+        return pharmacyDataSet.get(index).pharmacyName;
+    }
+
+    public static int getPharmacyZipcode(int index){
+        return pharmacyDataSet.get(index).pharmacyZipcode;
+    }
+
+    public static String getPharmacyAddress(int index){
+        return pharmacyDataSet.get(index).pharmacyAddress;
+    }
+
+    public static String getPharmacyTel(int index){
+        return pharmacyDataSet.get(index).pharmacyTel;
+    }
+
+    public static double getPharmacyLat(int index){
+        return pharmacyDataSet.get(index).pharmacy_lat;
+    }
+
+    public static double getPharmacyLng(int index){
+        return pharmacyDataSet.get(index).pharmacy_lng;
+    }
 
 
     public void loadDataBase() {
@@ -204,22 +272,42 @@ public class AccessDataBase{
         dbLocate.close();
 
 
-//        DataBaseHelper dbHospital = new DataBaseHelper(mcontext);
-//        SQLiteDatabase dbHospitalPos = dbHospital.getReadableDatabase();
-//        Cursor hospitalCursor = dbHospitalPos.rawQuery("SELECT * FROM hospital_db", null);
-//        while (hospitalCursor.moveToNext()){
-//            hospitalData hospitalData = new hospitalData();
-//            hospitalData.hospitalName = medDataCursor.getString(0);
-//            hospitalData.hospitalZipcode = medDataCursor.getInt(1);
-//            hospitalData.hospitalAddress = medDataCursor.getString(2);
-//            hospitalData.hospital_lat = medDataCursor.getDouble(3);
-//            hospitalData.hospital_lng = medDataCursor.getDouble(4);
-//            hospitalData.hospital_homepage = medDataCursor.getString(5);
-//            hospitalDataSet.add(hospitalData);
-//            hospitalIndex += 1;
-//        }
-//
-//        medDataCursor.close();
-//        dbLocate.close();
+        DataBaseHelper dbHospital = new DataBaseHelper(mcontext);
+        SQLiteDatabase dbHospitalPos = dbHospital.getReadableDatabase();
+        Cursor hospitalCursor = dbHospitalPos.rawQuery("SELECT * FROM hospital_db", null);
+        while (hospitalCursor.moveToNext()){
+            hospitalData hospitalData = new hospitalData();
+            hospitalData.hospitalName = hospitalCursor.getString(0);
+            hospitalData.hospitalZipcode = hospitalCursor.getInt(1);
+            hospitalData.hospitalAddress = hospitalCursor.getString(2);
+            hospitalData.hospital_lat = hospitalCursor.getDouble(3);
+            hospitalData.hospital_lng = hospitalCursor.getDouble(4);
+            hospitalData.hospital_homepage = hospitalCursor.getString(5);
+            hospitalDataSet.add(hospitalData);
+            hospitalIndex += 1;
+        }
+
+        hospitalCursor.close();
+        dbHospital.close();
+
+
+
+        DataBaseHelper dbPharmacy = new DataBaseHelper(mcontext);
+        SQLiteDatabase dbPharmacyData = dbPharmacy.getReadableDatabase();
+        Cursor pharmacyCursor = dbPharmacyData.rawQuery("SELECT * FROM pharmacy_db", null);
+        while (pharmacyCursor.moveToNext()){
+            pharmacyData pharmacyData = new pharmacyData();
+            pharmacyData.pharmacyName = pharmacyCursor.getString(0);
+            pharmacyData.pharmacyZipcode = pharmacyCursor.getInt(1);
+            pharmacyData.pharmacyAddress = pharmacyCursor.getString(2);
+            pharmacyData.pharmacyTel = pharmacyCursor.getString(3);
+            pharmacyData.pharmacy_lat = pharmacyCursor.getDouble(4);
+            pharmacyData.pharmacy_lng = pharmacyCursor.getDouble(5);
+            pharmacyDataSet.add(pharmacyData);
+            pharmacyIndex += 1;
+        }
+
+        pharmacyCursor.close();
+        dbPharmacy.close();
     }
 }
