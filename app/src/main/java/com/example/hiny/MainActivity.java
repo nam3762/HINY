@@ -233,7 +233,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private Marker addMarker(double latitude, double longitude) {
-        // 기존 마커가 있을 경우 제거
 
         // 새로운 마커 생성
         marker=new Marker();
