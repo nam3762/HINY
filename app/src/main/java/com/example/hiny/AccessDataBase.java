@@ -28,6 +28,7 @@ public class AccessDataBase{
         private String precaution;
         private String foodsToBeAwareOf;
         private String storageMethod;
+        private int price;
     }
 
     private static int maxIndex = 0;
@@ -133,6 +134,9 @@ public class AccessDataBase{
     public static String getStorageMethod(int index){
         return medDataSet.get(index).storageMethod;
     }
+    public static int getPrice(int index){
+        return medDataSet.get(index).price;
+    }
 
 
 
@@ -182,6 +186,7 @@ public class AccessDataBase{
             medData.precaution = medDataCursor.getString(7);
             medData.foodsToBeAwareOf = medDataCursor.getString(8);
             medData.storageMethod = medDataCursor.getString(9);
+            medData.price = medDataCursor.getInt(10);
             medDataSet.add(medData);
             medMaxIndex += 1;
         }
