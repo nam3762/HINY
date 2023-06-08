@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity
         checkbtn = (ImageButton) findViewById(R.id.check);
         homebtn = (ImageButton) findViewById(R.id.home);
         acDB.loadDataBase();
-        //loadMarker();
-
+        //AccessDataBase.loadDataBase();
+            //loadMarker();
         checkbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

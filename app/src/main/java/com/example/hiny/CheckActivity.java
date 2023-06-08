@@ -30,9 +30,13 @@ public class CheckActivity extends Activity {
     private ImageButton homebtn;
     Integer[] questionNumber = new Integer[4];
     Integer realQuestion = 0;
+
+
+    private boolean start = true;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_check);
         homebtn = (ImageButton) findViewById(R.id.home);
@@ -68,7 +72,6 @@ public class CheckActivity extends Activity {
         questions[23] = new Question(null, "근육통", "신신파스 아레스");
 
         setButtonLabels(questions, getNumberList(0));
-
 
 
         answer1.setOnClickListener(new View.OnClickListener() {
