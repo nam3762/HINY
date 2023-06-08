@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity
     };
     public AccessDataBase acDB  = new AccessDataBase(this);
     private boolean start = true;
-    private boolean start2 = true;
-    private boolean start3 = true;
+    private boolean start2 = false;
+    private boolean start3 = false;
     private Double selflat, selflon, distance;
     public LatLng currentLocation;
     private HashMap<Marker, Integer> markerData = new HashMap<Marker, Integer>();
@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
         checkbtn = (ImageButton) findViewById(R.id.check);
         homebtn = (ImageButton) findViewById(R.id.home);
-        hosbtn = (ImageButton) findViewById(R.id.hospital);
         drugbtn = (ImageButton) findViewById(R.id.drug);
+        hosbtn = (ImageButton) findViewById(R.id.hospital);
 
         acDB.loadDataBase();
         //loadMarker();
@@ -89,14 +89,14 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {start = true;}
         });
 
-        hosbtn.setOnClickListener(new View.OnClickListener() {
+        drugbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 start2 = true;
             }
         });
 
-        drugbtn.setOnClickListener(new View.OnClickListener() {
+        hosbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 start3 = true;
@@ -120,9 +120,23 @@ public class MainActivity extends AppCompatActivity
 
                 currentLocation = new LatLng(selflat,selflon);
 
-                if(start) {
-                    loadMarker();
+                if(start){
+                    loadMarker(1);
                     start = false;
+                    CameraUpdate cameraUpdate = CameraUpdate.scrollTo(currentLocation);
+                    naverMap.moveCamera(cameraUpdate);
+                }
+
+                if(start2){
+                    loadMarker(2);
+                    start2 = false;
+                    CameraUpdate cameraUpdate = CameraUpdate.scrollTo(currentLocation);
+                    naverMap.moveCamera(cameraUpdate);
+                }
+
+                if(start3){
+                    loadMarker(3);
+                    start3 = false;
                     CameraUpdate cameraUpdate = CameraUpdate.scrollTo(currentLocation);
                     naverMap.moveCamera(cameraUpdate);
                 }
@@ -150,8 +164,9 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    public void loadMarker() {
+    public void loadMarker(int def) {
         for(Marker mark : markerData.keySet() ){
+            Log.d("marker", mark.getPosition().toString());
             mark.setMap(null);
         }
 
@@ -166,15 +181,32 @@ public class MainActivity extends AppCompatActivity
 
         Projection projection = naverMap.getProjection();
         LatLng pos = projection.fromScreenLocation(new PointF(middleWidth, middleHeight));
-
-        for(int i=0; i< AccessDataBase.getMaxIndex(); i++){
-            if (getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), selflat, selflon) < 3.0) {
-                markerData.put(addMarker(AccessDataBase.getLat(i), AccessDataBase.getLng(i)), i);
+        if (def == 1){
+            for(int i=0; i< AccessDataBase.getMaxIndex(); i++){
+                if (getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), selflat, selflon) < 3.0) {
+                    markerData.put(addMarker(AccessDataBase.getLat(i), AccessDataBase.getLng(i)), i);
+                }
+                System.out.println(AccessDataBase.getLat(i) + ", "+ AccessDataBase.getLng(i) + "\n");
             }
-            //System.out.println(AccessDataBase.getLat(i) + ", "+ AccessDataBase.getLng(i) + "\n");
+        }
+        if (def == 2){
+            for(int i=0; i< AccessDataBase.getPharmacyIndex(); i++){
+                if (getDistance(AccessDataBase.getPharmacyLat(i), AccessDataBase.getPharmacyLng(i), selflat, selflon) < 3.0) {
+                    markerData.put(addMarker2(AccessDataBase.getPharmacyLat(i), AccessDataBase.getPharmacyLng(i)), i);
+                }
+                System.out.println(AccessDataBase.getPharmacyLat(i) + ", "+ AccessDataBase.getPharmacyLng(i) + "\n");
+            }
+        }
+        if (def == 3){
+            for(int i=0; i< AccessDataBase.getHospitalIndex(); i++){
+                if (getDistance(AccessDataBase.getHospitalLat(i), AccessDataBase.getHospitalLng(i), selflat, selflon) < 3.0) {
+                    markerData.put(addMarker3(AccessDataBase.getHospitalLat(i), AccessDataBase.getHospitalLng(i)), i);
+                }
+                System.out.println(AccessDataBase.getHospitalLat(i) + ", "+ AccessDataBase.getHospitalLng(i) + "\n");
+            }
         }
 
-        AtomicReference<String> informationWindow = new AtomicReference<>("InitValue");
+        AtomicReference<String> informationWindow = new AtomicReference<>("test");
         InfoWindow infoWindow = new InfoWindow();
         infoWindow.setAdapter(new InfoWindow.DefaultTextAdapter(context) {
 
@@ -182,6 +214,7 @@ public class MainActivity extends AppCompatActivity
             @NonNull
             @Override
             public CharSequence getText(@NonNull InfoWindow infoWindow) {
+
                 return informationWindow.get();
             }
         });
@@ -190,9 +223,9 @@ public class MainActivity extends AppCompatActivity
         Overlay.OnClickListener listener = overlay -> {
             Marker marker = (Marker)overlay;
             int dataID = markerData.get(marker);
-            informationWindow.set(AccessDataBase.getName(dataID) + "\n"
-            + "주소: " + AccessDataBase.getAddress(dataID) + "\n"
-            + "전화번호: " + AccessDataBase.getTel(dataID));
+//            informationWindow.set(AccessDataBase.getName(dataID) + "\n"
+//            + "주소: " + AccessDataBase.getAddress(dataID) + "\n"
+//            + "전화번호: " + AccessDataBase.getTel(dataID));
 
 
             if (marker.getInfoWindow() == null) {
@@ -248,24 +281,24 @@ public class MainActivity extends AppCompatActivity
 
     private Marker addMarker2(double latitude, double longitude){
         marker2=new Marker();
-        marker2.setIcon(OverlayImage.fromResource(R.drawable.sangbi));
+        marker2.setIcon(OverlayImage.fromResource(R.drawable.doctor));
         marker2.setWidth(60);
         marker2.setHeight(60);
         marker2.setPosition(new LatLng(latitude, longitude));
         marker2.setMap(naverMap);
 
-        return marker;
+        return marker2;
     }
 
     private Marker addMarker3(double latitude, double longitude){
         marker3=new Marker();
-        marker3.setIcon(OverlayImage.fromResource(R.drawable.sangbi));
+        marker3.setIcon(OverlayImage.fromResource(R.drawable.hiny_main));
         marker3.setWidth(60);
         marker3.setHeight(60);
         marker3.setPosition(new LatLng(latitude, longitude));
         marker3.setMap(naverMap);
 
-        return marker;
+        return marker3;
     }
 
     @Override
