@@ -30,6 +30,7 @@ import com.naver.maps.map.Projection;
 import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.Overlay;
+import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.util.FusedLocationSource;
 
 import java.util.HashMap;
@@ -39,9 +40,9 @@ public class MainActivity extends AppCompatActivity
         implements OnMapReadyCallback{
 
     private NaverMap naverMap;
-    private ImageButton checkbtn,homebtn;
+    private ImageButton checkbtn,homebtn,hosbtn,drugbtn;
     private FusedLocationSource locationSource;
-    private Marker marker;
+    private Marker marker,marker2,marker3;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     private static final String[] PERMISSIONS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -51,13 +52,11 @@ public class MainActivity extends AppCompatActivity
     private boolean start = true;
     private Double selflat, selflon, distance;
     public LatLng currentLocation;
-
     private HashMap<Marker, Integer> markerData = new HashMap<Marker, Integer>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         FragmentManager fm = getSupportFragmentManager();
         MapFragment mapFragment = (MapFragment)fm.findFragmentById(R.id.map);
         if (mapFragment == null) {
@@ -68,6 +67,8 @@ public class MainActivity extends AppCompatActivity
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
         checkbtn = (ImageButton) findViewById(R.id.check);
         homebtn = (ImageButton) findViewById(R.id.home);
+        hosbtn = (ImageButton) findViewById(R.id.hospital);
+
         acDB.loadDataBase();
         //loadMarker();
 
@@ -82,11 +83,22 @@ public class MainActivity extends AppCompatActivity
 
         homebtn.setOnClickListener(new View.OnClickListener() {
             @Override
+            public void onClick(View view) {start = true;}
+        });
+
+        hosbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
-                start = true;
+                start=true;
             }
         });
 
+        drugbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                start=true;
+            }
+        });
 
 
     }
@@ -97,7 +109,6 @@ public class MainActivity extends AppCompatActivity
         this.naverMap = naverMap;
         naverMap.setLocationSource(locationSource);  //현재위치 표시
         ActivityCompat.requestPermissions(this, PERMISSIONS, LOCATION_PERMISSION_REQUEST_CODE);
-
         naverMap.addOnLocationChangeListener(new NaverMap.OnLocationChangeListener() {
             @Override
             public void onLocationChange(@NonNull Location location) {
@@ -155,7 +166,6 @@ public class MainActivity extends AppCompatActivity
         LatLng pos = projection.fromScreenLocation(new PointF(middleWidth, middleHeight));
 
         for(int i=0; i< AccessDataBase.getMaxIndex(); i++){
-            //if (getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), selflat, selflon) < 4.0) {
             if (getDistance(AccessDataBase.getLat(i), AccessDataBase.getLng(i), selflat, selflon) < 3.0) {
                 markerData.put(addMarker(AccessDataBase.getLat(i), AccessDataBase.getLng(i)), i);
             }
@@ -227,13 +237,35 @@ public class MainActivity extends AppCompatActivity
 
         // 새로운 마커 생성
         marker=new Marker();
+        marker.setIcon(OverlayImage.fromResource(R.drawable.sangbi));
+        marker.setWidth(60);
+        marker.setHeight(60);
         marker.setPosition(new LatLng(latitude, longitude));
         marker.setMap(naverMap);
 
         return marker;
-        // 마커가 추가된 위치로 카메라 이동
-//        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(latitude, longitude));
-//        naverMap.moveCamera(cameraUpdate);
+    }
+
+    private Marker addMarker2(double latitude, double longitude){
+        marker2=new Marker();
+        marker2.setIcon(OverlayImage.fromResource(R.drawable.sangbi));
+        marker2.setWidth(60);
+        marker2.setHeight(60);
+        marker2.setPosition(new LatLng(latitude, longitude));
+        marker2.setMap(naverMap);
+
+        return marker;
+    }
+
+    private Marker addMarker3(double latitude, double longitude){
+        marker3=new Marker();
+        marker3.setIcon(OverlayImage.fromResource(R.drawable.sangbi));
+        marker3.setWidth(60);
+        marker3.setHeight(60);
+        marker3.setPosition(new LatLng(latitude, longitude));
+        marker3.setMap(naverMap);
+
+        return marker;
     }
 
     @Override
