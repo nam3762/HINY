@@ -30,9 +30,13 @@ public class CheckActivity extends Activity {
     private ImageButton homebtn;
     Integer[] questionNumber = new Integer[4];
     Integer realQuestion = 0;
+
+
+    private boolean start = true;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_check);
         homebtn = (ImageButton) findViewById(R.id.home);
@@ -40,7 +44,6 @@ public class CheckActivity extends Activity {
         Button answer2 = findViewById(R.id.btn2);
         Button answer3 = findViewById(R.id.btn3);
         Button answer4 = findViewById(R.id.btn4);
-        String test = "test";
         Question[] questions = new Question[24];
         questions[0] = new Question("당신은 어떤 증세가 있으십니까?", null, null);
         questions[1] = new Question("나이가 어떻게 되십니까?", "감기 증세", null);
@@ -68,7 +71,6 @@ public class CheckActivity extends Activity {
         questions[23] = new Question(null, "근육통", "신신파스 아레스");
 
         setButtonLabels(questions, getNumberList(0));
-
 
 
         answer1.setOnClickListener(new View.OnClickListener() {
@@ -197,7 +199,7 @@ public class CheckActivity extends Activity {
         else {
             question_view.setText(questions[realQuestion].getDrug());
             new Thread(() -> {
-                String url ="http://113.198.137.238:80/log.php";
+                String url ="http://tuxserver.cbnu.ac.kr:80/log.php";
                 OkHttpClient client = new OkHttpClient();
                 String data = getTime() + " " + questions[realQuestion].getDrug();
                 RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain"), data);
