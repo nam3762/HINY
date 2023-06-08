@@ -178,6 +178,10 @@ public class AccessDataBase{
         return hospitalDataSet.get(index).hospitalZipcode;
     }
 
+    public static String getHospitalTel(int index){
+        return hospitalDataSet.get(index).hospitalTel;
+    }
+
     public static String getHospitalAddress(int index){
         return hospitalDataSet.get(index).hospitalAddress;
     }
@@ -280,9 +284,10 @@ public class AccessDataBase{
             hospitalData.hospitalName = hospitalCursor.getString(0);
             hospitalData.hospitalZipcode = hospitalCursor.getInt(1);
             hospitalData.hospitalAddress = hospitalCursor.getString(2);
-            hospitalData.hospital_lat = hospitalCursor.getDouble(3);
-            hospitalData.hospital_lng = hospitalCursor.getDouble(4);
-            hospitalData.hospital_homepage = hospitalCursor.getString(5);
+            hospitalData.hospitalTel = hospitalCursor.getString(3);
+            hospitalData.hospital_lat = hospitalCursor.getDouble(4);
+            hospitalData.hospital_lng = hospitalCursor.getDouble(5);
+            hospitalData.hospital_homepage = hospitalCursor.getString(6);
             hospitalDataSet.add(hospitalData);
             hospitalIndex += 1;
         }
