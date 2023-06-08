@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity
     };
     public AccessDataBase acDB  = new AccessDataBase(this);
     private boolean start = true;
+    private boolean start2 = true;
+    private boolean start3 = true;
     private Double selflat, selflon, distance;
     public LatLng currentLocation;
     private HashMap<Marker, Integer> markerData = new HashMap<Marker, Integer>();
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity
         checkbtn = (ImageButton) findViewById(R.id.check);
         homebtn = (ImageButton) findViewById(R.id.home);
         hosbtn = (ImageButton) findViewById(R.id.hospital);
+        drugbtn = (ImageButton) findViewById(R.id.drug);
 
         acDB.loadDataBase();
         //loadMarker();
@@ -89,14 +92,14 @@ public class MainActivity extends AppCompatActivity
         hosbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                start=true;
+                start2 = true;
             }
         });
 
         drugbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                start=true;
+                start3 = true;
             }
         });
 
