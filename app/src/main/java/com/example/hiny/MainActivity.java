@@ -223,10 +223,20 @@ public class MainActivity extends AppCompatActivity
         Overlay.OnClickListener listener = overlay -> {
             Marker marker = (Marker)overlay;
             int dataID = markerData.get(marker);
-//            informationWindow.set(AccessDataBase.getName(dataID) + "\n"
-//            + "주소: " + AccessDataBase.getAddress(dataID) + "\n"
-//            + "전화번호: " + AccessDataBase.getTel(dataID));
 
+            if (def == 1) {
+                informationWindow.set(AccessDataBase.getName(dataID) + "\n"
+                        + "주소: " + AccessDataBase.getAddress(dataID) + "\n"
+                        + "전화번호: " + AccessDataBase.getTel(dataID));
+            }if(def == 2){
+                informationWindow.set(AccessDataBase.getPharmacyName(dataID) + "\n"
+                        + "주소: " + AccessDataBase.getPharmacyAddress(dataID) + "\n"
+                        + "전화번호: " + AccessDataBase.getPharmacyTel(dataID));
+            }if(def == 3){
+                informationWindow.set(AccessDataBase.getHospitalName(dataID) + "\n"
+                        + "주소: " + AccessDataBase.getHospitalAddress(dataID) + "\n"
+                        + "전화번호: " + AccessDataBase.getHospitalTel(dataID));
+            }
 
             if (marker.getInfoWindow() == null) {
                 // 현재 마커에 정보 창이 열려있지 않을 경우 엶
