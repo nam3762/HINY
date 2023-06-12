@@ -15,9 +15,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowMetrics;
 import android.widget.ImageButton;
 
 import com.naver.maps.geometry.LatLng;
@@ -320,7 +318,7 @@ public class MainActivity extends AppCompatActivity
 
     private Marker addMarker2(double latitude, double longitude){
         marker2=new Marker();
-        marker2.setIcon(OverlayImage.fromResource(R.drawable.doctor));
+        marker2.setIcon(OverlayImage.fromResource(R.drawable.drug));
         marker2.setWidth(60);
         marker2.setHeight(60);
         marker2.setPosition(new LatLng(latitude, longitude));
@@ -331,7 +329,7 @@ public class MainActivity extends AppCompatActivity
 
     private Marker addMarker3(double latitude, double longitude){
         marker3=new Marker();
-        marker3.setIcon(OverlayImage.fromResource(R.drawable.hiny_main));
+        marker3.setIcon(OverlayImage.fromResource(R.drawable.hospital_icon));
         marker3.setWidth(60);
         marker3.setHeight(60);
         marker3.setPosition(new LatLng(latitude, longitude));
