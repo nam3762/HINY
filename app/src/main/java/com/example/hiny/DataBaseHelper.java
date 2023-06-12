@@ -12,13 +12,27 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+
+/* ***********************
+ * 클래스명 : DataBaseHelper
+ * 이름 : 윤석현
+ * 학번 : 2019038011
+ * 설명 : 데이터 베이스를 불러오기 위한 기본 설정을 관리하는 클래스
+ * ************************/
 public class DataBaseHelper extends SQLiteOpenHelper{
-    private final static String TAG = "DataBaseHelper"; // Logcat에 출력할 태그이름
+    private final static String TAG = "DataBaseHelper";
     // database 의 파일 경로
     private static String DB_PATH = "";
     private static String DB_NAME = "em_store.db";
     private SQLiteDatabase mDataBase;
     private Context mContext;
+
+    /* ***********************
+     * 함수명 : DataBaseHelper
+     * 이름 : 윤석현
+     * 학번 : 2019038011
+     * 설명 : DataBaseHelper의 생성자
+     * ************************/
 
     public DataBaseHelper(Context context) {
         super(context,DB_NAME,null,1);
@@ -29,6 +43,12 @@ public class DataBaseHelper extends SQLiteOpenHelper{
         dataBaseCheck();
     }
 
+    /* ***********************
+     * 함수명 : dataBaseCheck
+     * 이름 : 윤석현
+     * 학번 : 2019038011
+     * 설명 : 데이터베이스를 검사하기위한 함수
+     * ************************/
     private void dataBaseCheck() {
         File dbFile = new File(DB_PATH + DB_NAME);
         if (!dbFile.exists()) {
@@ -37,7 +57,12 @@ public class DataBaseHelper extends SQLiteOpenHelper{
         }
     }
 
-
+    /* ***********************
+     * 함수명 : close
+     * 이름 : 윤석현
+     * 학번 : 2019038011
+     * 설명 : 데이터 베이스를 닫기위한 함수
+     * ************************/
     @Override
     public synchronized void close() {
         if (mDataBase != null) {
@@ -45,7 +70,6 @@ public class DataBaseHelper extends SQLiteOpenHelper{
         }
         super.close();
     }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         // 테이블 구조 생성로직
@@ -59,13 +83,18 @@ public class DataBaseHelper extends SQLiteOpenHelper{
         Log.d(TAG,"onOpen() : DB Opening!");
     }
 
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // 테이블 삭제하고 onCreate() 다시 로드시킨다.
         Log.d(TAG,"onUpgrade() : DB Schema Modified and Excuting onCreate()");
     }
-
-    // db를 assets에서 복사해온다.
+    /* ***********************
+     * 함수명 : dbCopy
+     * 이름 : 윤석현
+     * 학번 : 2019038011
+     * 설명 : 데이터 베이스를 복하하기 위한 함수
+     * ************************/
     private void dbCopy() {
 
         try {

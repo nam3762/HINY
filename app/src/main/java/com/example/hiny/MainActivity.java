@@ -106,7 +106,12 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
+    /* ***********************
+     * 함수명 : onMapReady
+     * 이름 : 윤석현
+     * 학번 : 2019038011
+     * 설명 : 네이버 지도 api를 준비하는 함수
+     * ************************/
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
         this.naverMap = naverMap;
@@ -146,6 +151,13 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+
+    /* ***********************
+     * 함수명 : onTouchEvent
+     * 이름 : 윤석현
+     * 학번 : 2019038011
+     * 설명 : 터치이벤트 관리하는 함수
+     * ************************/
 //    @Override
 //    public boolean onTouchEvent(MotionEvent event) {
 //        switch (event.getAction()) {
@@ -163,7 +175,12 @@ public class MainActivity extends AppCompatActivity
 //    }
 
 
-
+    /* ***********************
+     * 함수명 : loadMarker
+     * 이름 : 윤석현
+     * 학번 : 2019038011
+     * 설명 : 네이버지도의 마커 오버레이를 로딩하는 함수
+     * ************************/
     public void loadMarker(int def) {
         for(Marker mark : markerData.keySet() ){
             Log.d("marker", mark.getPosition().toString());
@@ -258,7 +275,13 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-
+    /* ***********************
+     * 함수명 : getDistance
+     * 이름 : 윤석현
+     * 학번 : 2019038011
+     * 설명 : 네이버지도의 오버레이를 표시할 때 사용할 두 위도, 경도의
+     *       사이의 거리를 구하는 함수
+     * ************************/
     private static double getDistance(double lat1, double lng1, double lat2, double lng2) {
         double distance;
         double radian = Math.PI / 180;
@@ -275,7 +298,13 @@ public class MainActivity extends AppCompatActivity
         return distance;
 
     }
-
+    /* ***********************
+     * 함수명 : addMarker
+     * 이름 : 윤석현
+     * 학번 : 2019038011
+     * 설명 : 네이버지도의 오버레이를 표시할 때 사용할 두 위도, 경도의
+     *       사이의 거리를 구하는 함수
+     * ************************/
     private Marker addMarker(double latitude, double longitude) {
 
         // 새로운 마커 생성
@@ -310,7 +339,12 @@ public class MainActivity extends AppCompatActivity
 
         return marker3;
     }
-
+    /* ***********************
+     * 함수명 : onRequestPermissionsResult
+     * 이름 : 윤석현
+     * 학번 : 2019038011
+     * 설명 : 네이버지도의 현재위치에 조회 권한관련 함수
+     * ************************/
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 

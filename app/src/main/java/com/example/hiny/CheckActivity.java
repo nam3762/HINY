@@ -164,6 +164,12 @@ public class CheckActivity extends Activity {
         return numberList;
     }
 
+    /* ***********************
+     * 함수명 : getDoseData
+     * 이름 : 윤석현
+     * 학번 : 2019038011
+     * 설명 : 약의 이름과 투약정보의 해시테이블을 만드는 함수
+     * ************************/
     private void getDoseData(){
         for(int i=0; i<AccessDataBase.getMedMaxIndex(); i++){
             getDose.put(AccessDataBase.getMedicine(i), AccessDataBase.getDosage(i));

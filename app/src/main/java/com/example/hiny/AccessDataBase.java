@@ -11,6 +11,13 @@ import com.naver.maps.geometry.Tm128;
 
 import java.util.ArrayList;
 
+
+/* ***********************
+ * 클래스명 : AccessDataBase
+ * 이름 : 윤석현
+ * 학번 : 2019038011
+ * 설명 : 데이터 베이스를 불러오는 클래스
+ * ************************/
 public class AccessDataBase{
 
     public static final ArrayList<convData> convDataSet = new ArrayList<>();
@@ -227,7 +234,12 @@ public class AccessDataBase{
         return pharmacyDataSet.get(index).pharmacy_lng;
     }
 
-
+    /* ***********************
+     * 함수명 : loadDataBase
+     * 이름 : 윤석현
+     * 학번 : 2019038011
+     * 설명 : 데이터 베이스를 불러오는 함수
+     * ************************/
     public void loadDataBase() {
         DataBaseHelper dbConv = new DataBaseHelper(mcontext);
         SQLiteDatabase db = dbConv.getReadableDatabase();
